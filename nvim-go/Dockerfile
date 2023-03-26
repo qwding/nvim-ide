@@ -23,5 +23,15 @@ RUN cd /root/.config/nvim/plugins/vimspector && python3 install_gadget.py --enab
 # Copy Neovim configuration files.
 COPY ./config/ /root/.config/nvim/
 
+RUN apt-get install -y openssh-server
+
+RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+RUN echo "root:courier"|chpasswd
+
+EXPOSE 22
+COPY run.sh /run.sh
+RUN chmod +x /run.sh
+
 # Avoid container exit.
-CMD ["tail", "-f", "/dev/null"]
+# CMD ["tail", "-f", "/dev/null"]
+CMD ["sh","/run.sh"]
