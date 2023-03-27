@@ -15,6 +15,7 @@ lua << EOF
     },
     ensure_installed = {
       "css",
+      "go",
       "html",
       "javascript",
       "json",

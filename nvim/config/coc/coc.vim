@@ -14,25 +14,24 @@ endif
 
 " Code completion
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-function! s:check_back_space() abort
+function! CheckBackspace() abort
   let col = col('.') - 1
-  return !col || getline('.')[col - 1] =~# '\s'
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Key binding used to trigger completion
 inoremap <silent><expr> <C-Space> coc#refresh()
 
 " Confirm completion
-inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm()
-      \: "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
-
-" Key binding for programming documentation
-nnoremap <silent> <leader>d :call <SID>show_documentation()<CR>
+"inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm()
+"      \: "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
 
 function! s:show_documentation()
   if (index(['vim', 'help'], &filetype) >= 0)
@@ -52,6 +51,17 @@ inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<C-r>=coc#float
 vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 
+
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+
 " Highlight symbol and references on cursor hold
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -60,24 +70,6 @@ nmap <leader>cf <Plug>(coc-format)
 
 " Key binding for code action (optimize imports, generate code, etc.)
 nmap <leader>ca <Plug>(coc-codeaction)
-
-" Key binding used for symbol rename
-nmap <F2> <Plug>(coc-rename)
-
-" Key binding used to go to definition
-nmap <leader>cd <Plug>(coc-definition)
-
-" Key binding used to go to type definition
-nmap <leader>ct <Plug>(coc-type-definition)
-
-" Key binding used to to to implementation
-nmap <leader>ci <Plug>(coc-implementation)
-
-" Key binding used to go to declaration
-nmap <leader>cr <Plug>(coc-declaration)
-
-" Key binding used to find usages
-nmap <leader>cu <Plug>(coc-references)
 
 " Key binding for quick fix
 nmap <leader>cq <Plug>(coc-fix-current)

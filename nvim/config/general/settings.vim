@@ -3,7 +3,7 @@
 " @author Maciej Bedra
 
 " Set leader key
-let g:mapleader = "\<Space>"
+let g:mapleader = "."
 
 " Enable syntax highlighting
 syntax enable
@@ -60,6 +60,8 @@ set expandtab
 " Smart indents
 set smartindent
 
+set ignorecase
+
 " Support auto indent
 set autoindent
 
@@ -67,13 +69,13 @@ set autoindent
 set laststatus=0
 
 " Line numbers
-set number relativenumber
+set number " relativenumber
 
 " Highlight current line
 set cursorline
 
 " Smooth scroll
-set so=999
+set so=3
 
 " Max line length
 set colorcolumn=120
@@ -108,6 +110,16 @@ set clipboard=unnamedplus
 
 " Spell check
 set spell spelllang=en_us,pl
+
+autocmd BufReadPost *
+      \ if line("'\"") >= 1 && line("'\"") <= line("$")
+      \ |   exe "normal! g`\""
+      \ | endif
+
+noremap H ^
+noremap L $
+
+let g:ag_cli = 'rg'
 
 " Auto source while writing to init.vim
 au! BufWritePost $MYVIMRC source %      

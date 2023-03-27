@@ -25,9 +25,13 @@ call plug#begin('/root/.config/nvim/plugins')
   Plug 'airblade/vim-gitgutter'
   Plug 'ap/vim-css-color'
   Plug 'nvim-treesitter/nvim-treesitter'
-  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+  Plug 'neoclide/coc.nvim', { 'tag': 'v0.0.82' }
   Plug 'puremourning/vimspector'
+  Plug 'taoso/ag.vim'
 call plug#end()
+
+let mapleader="."
+nnoremap <leader>e :NERDTreeToggle<cr>
 
 " Extensions configuration
 source /root/.config/nvim/gruvbox/gruvbox.vim
@@ -43,3 +47,4 @@ source /root/.config/nvim/treesitter/treesitter.vim
 source /root/.config/nvim/coc/coc.vim
 source /root/.config/nvim/coc/extensions.vim
 source /root/.config/nvim/vimspector/vimspector.vim
+
